@@ -860,3 +860,8 @@ body:has(.filter-modal[open]) { overflow: hidden; }
 }
 
 .demo-notice{background:#fff5ca;color:#302c20;padding:10px 18px;text-align:center;font:13px/1.5 sans-serif;position:relative;z-index:2}.demo-note{padding:10px 0;color:#685b32;font-size:12px}
+/* Match the header cart to the consultation CTA on tablet and desktop. */
+@media (min-width: 681px) {
+  .header__nav .btn { height: 40px; min-height: 40px; }
+  .header__cart { width: 40px; min-width: 40px; height: 40px; }
+}
