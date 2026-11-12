@@ -881,3 +881,8 @@ body:has(.filter-modal[open]) { overflow: hidden; }
 }
 
 @media (min-width: 1920px) { #products .grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* Home-only metadata sits beneath the product name. */
+.carousel__track .card__title { margin-bottom: 6px; }
+.carousel__track .card__details { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; margin: 0 0 12px; color: var(--muted); font-size: 11px; line-height: 1.5; }
+.carousel__track .card__details span + span::before { content: "·"; margin-right: 8px; }
