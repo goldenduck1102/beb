@@ -886,3 +886,7 @@ body:has(.filter-modal[open]) { overflow: hidden; }
 .carousel__track .card__title { margin-bottom: 6px; }
 .carousel__track .card__details { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; margin: 0 0 12px; color: var(--muted); font-size: 11px; line-height: 1.5; }
 .carousel__track .card__details span + span::before { content: "·"; margin-right: 8px; }
+
+/* More breathing room between featured products. */
+#featured .carousel__track { column-gap: 40px; }
+@media (max-width: 680px) { #featured .carousel__track { column-gap: 20px; } }
