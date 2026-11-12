@@ -43,7 +43,7 @@
   }
 
   function cardHtml(product, index, catalog = false) {
-    if (catalog) return `<article class="card" data-cat="${product.cat}" style="--product-size:${productSize(product)}">
+    return `<article class="card" data-cat="${product.cat}" style="--product-size:${productSize(product)}">
       <div class="card__link"><a class="card__preview" href="#sp-${product.sku}" data-sku="${product.sku}">
         <div class="card__heading"><p class="card__brand">${escapeHtml(product.brand)}</p>
           <div class="card__meta"><span>${escapeHtml(CATEGORIES[product.cat] || "Thiết kế khác")}</span><span>${escapeHtml(product.sku)}</span></div>
@@ -56,18 +56,6 @@
           <div class="card__actions"><button type="button" class="btn btn--solid" data-card-add="${product.sku}">${icon("cart")}Thêm vào giỏ</button><a href="#contact" class="btn" data-card-consult="${product.sku}">Nhận tư vấn</a></div>
         </div>
       </div>
-    </article>`;
-    return `<article class="card" data-cat="${product.cat}" style="--product-size:${productSize(product)}">
-      <a class="card__link" href="#sp-${product.sku}" data-sku="${product.sku}">
-        <div class="card__media"><img src="${src(product.cardImg || product.img)}" alt="${escapeHtml(product.name)}" loading="lazy" decoding="async" width="1280" height="1280"></div>
-        <div class="card__body">
-          <span class="card__index" aria-hidden="true">${String(index + 1).padStart(2, "0")}</span>
-          <h3 class="card__title">${escapeHtml(product.title)}</h3>
-          <p class="card__brand">${escapeHtml(product.brand)}</p>
-          ${priceHtml(product)}
-          <span class="card__cta">${icon("plus")}<span class="sr-only">Khám phá</span></span>
-        </div>
-      </a>
     </article>`;
   }
 
