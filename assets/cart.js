@@ -1,6 +1,7 @@
 /* V3 consultation basket: shared across home/products, persisted by SKU. */
 (() => {
   'use strict';
+  const t = value => window.BEB_I18N?.t(value) ?? value;
   const key = 'goldenduck:beb-demo:cart:v1';
   const products = new Map((window.BEB_PRODUCTS || []).map(p => [p.sku, p]));
   const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -80,7 +81,7 @@
   form.elements.phone.addEventListener('input',()=>form.elements.phone.setCustomValidity(''));
   form.addEventListener('submit',async event=>{
     event.preventDefault();if(pending||!lines.length||!form.reportValidity())return;
-    const phone=form.elements.phone;phone.setCustomValidity(/^[+\d\s().-]+$/.test(phone.value)&&phone.value.replace(/\D/g,'').length>=9&&phone.value.replace(/\D/g,'').length<=15?'':'Vui lòng nhập số điện thoại hợp lệ (9–15 chữ số).');if(!form.reportValidity())return;
+    const phone=form.elements.phone;phone.setCustomValidity(/^[+\d\s().-]+$/.test(phone.value)&&phone.value.replace(/\D/g,'').length>=9&&phone.value.replace(/\D/g,'').length<=15?'':t('Vui lòng nhập số điện thoại hợp lệ (9–15 chữ số).'));if(!form.reportValidity())return;
     status.textContent='Mô phỏng thành công. Yêu cầu không được gửi; giỏ demo được giữ lại.';
     form.reset();
   });

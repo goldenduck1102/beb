@@ -2,6 +2,7 @@
    Mỗi phiên bản chỉ khác HTML + CSS; mọi khối được gắn bằng thuộc tính data-*. */
 (() => {
   "use strict";
+  const t = value => window.BEB_I18N?.t(value) ?? value;
   const icon = (name) => `<svg class="bnb-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="/beb/assets/icons/sprite.svg?v=20261113-2#${name}"/></svg>`;
   const SHARED = "/beb/shared/";
   const SALE = { start: Date.parse("2026-11-04T09:00:00+07:00"), end: Date.parse("2026-12-04T00:00:00+07:00") };
@@ -29,7 +30,7 @@
     if (consult) {
       const product = (window.BEB_PRODUCTS || []).find(p => p.sku === consult.dataset.cardConsult);
       const message = document.querySelector("#contact textarea");
-      if (product && message) { message.value = `Tôi muốn được tư vấn về ${product.title} (mã ${product.sku}).`; message.dispatchEvent(new Event("input", { bubbles: true })); }
+      if (product && message) { message.value = t(`Tôi muốn được tư vấn về ${product.title} (mã ${product.sku}).`); message.dispatchEvent(new Event("input", { bubbles: true })); }
     }
   });
 
@@ -85,7 +86,7 @@
         const query = normalize(search?.value || "");
         const items = base.filter((p) => (category === "all" || p.cat === category)
           && (!brand || appliedBrand === "all" || p.brandSlug === appliedBrand)
-          && (!query || normalize(`${p.title} ${p.name} ${p.sku}`).includes(query)));
+          && (!query || normalize(`${p.title} ${p.name} ${p.sku} ${t(p.title)} ${t(CATEGORIES[p.cat])}`).includes(query)));
         if (empty) empty.hidden = items.length > 0;
         if (appliedSort.startsWith("price-")) items.sort((a, b) => {
           const aKnown = Number.isFinite(a.price) && a.price > 0;
