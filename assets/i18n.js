@@ -50,16 +50,41 @@
   }
   const nav = document.querySelector('.header__nav');
   if (nav) {
-    const label = document.createElement('label'); label.className = 'language-switch';
-    label.innerHTML = '<span class="sr-only">Language / Ngôn ngữ / 언어</span><select aria-label="Language / Ngôn ngữ / 언어"><option value="vi" lang="vi">VI</option><option value="en" lang="en">EN</option><option value="ko" lang="ko">KO</option></select><svg class="language-switch__chevron" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
-    const select = label.querySelector('select'); select.value = lang;
-    select.addEventListener('change', () => {
-      const url = new URL(location.href); url.searchParams.set('lang', select.value);
-      try { localStorage.setItem(key, select.value); } catch {}
+    const control = document.createElement('div'); control.className = 'language-switch';
+    control.innerHTML = `<button type="button" class="language-switch__trigger" aria-label="Language / Ngôn ngữ / 언어: ${lang.toUpperCase()}" aria-haspopup="menu" aria-expanded="false" aria-controls="language-menu"><span>${lang.toUpperCase()}</span><svg class="language-switch__chevron" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg></button><div id="language-menu" class="language-switch__menu" role="menu" aria-label="Language / Ngôn ngữ / 언어" hidden>${supported.map(code => `<button type="button" role="menuitemradio" aria-checked="${code === lang}" data-language="${code}" tabindex="-1">${code.toUpperCase()}<span aria-hidden="true">${code === lang ? '✓' : ''}</span></button>`).join('')}</div>`;
+    const trigger = control.querySelector('.language-switch__trigger');
+    const menu = control.querySelector('.language-switch__menu');
+    const items = [...menu.querySelectorAll('[data-language]')];
+    function closeMenu(restoreFocus = false) {
+      menu.hidden = true; trigger.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) trigger.focus();
+    }
+    function openMenu(index = supported.indexOf(lang)) {
+      menu.hidden = false; trigger.setAttribute('aria-expanded', 'true'); items[index].focus();
+    }
+    trigger.addEventListener('click', () => menu.hidden ? openMenu() : closeMenu());
+    control.addEventListener('keydown', event => {
+      if (event.key === 'Escape') { event.preventDefault(); closeMenu(true); }
+      else if (['ArrowDown', 'ArrowUp', 'Home', 'End'].includes(event.key)) {
+        event.preventDefault();
+        const current = items.indexOf(document.activeElement);
+        const next = event.key === 'Home' ? 0 : event.key === 'End' ? items.length - 1 : current < 0 ? (event.key === 'ArrowUp' ? items.length - 1 : 0) : (current + (event.key === 'ArrowDown' ? 1 : -1) + items.length) % items.length;
+        openMenu(next);
+      } else if (event.key === 'Tab') closeMenu();
+    });
+    control.addEventListener('focusout', event => { if (!control.contains(event.relatedTarget)) closeMenu(); });
+    document.addEventListener('pointerdown', event => { if (!control.contains(event.target)) closeMenu(); });
+    menu.addEventListener('click', event => {
+      const item = event.target.closest('[data-language]'); if (!item) return;
+      const code = item.dataset.language;
+      if (code === lang) { closeMenu(true); return; }
+      const url = new URL(location.href); url.searchParams.set('lang', code);
+      try { localStorage.setItem(key, code); } catch {}
       location.assign(url.href);
     });
-    nav.append(label);
+    nav.append(control);
   }
+
   if (lang !== 'vi') {
     document.addEventListener('invalid', event => {
       const field = event.target, validity = field.validity;
