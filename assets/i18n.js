@@ -51,7 +51,7 @@
   const nav = document.querySelector('.header__nav');
   if (nav) {
     const label = document.createElement('label'); label.className = 'language-switch';
-    label.innerHTML = '<span class="sr-only">Language / Ngôn ngữ / 언어</span><select aria-label="Language / Ngôn ngữ / 언어"><option value="vi" lang="vi">VI</option><option value="en" lang="en">EN</option><option value="ko" lang="ko">한국어</option></select>';
+    label.innerHTML = '<span class="sr-only">Language / Ngôn ngữ / 언어</span><select aria-label="Language / Ngôn ngữ / 언어"><option value="vi" lang="vi">VI</option><option value="en" lang="en">EN</option><option value="ko" lang="ko">KO</option></select><svg class="language-switch__chevron" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
     const select = label.querySelector('select'); select.value = lang;
     select.addEventListener('change', () => {
       const url = new URL(location.href); url.searchParams.set('lang', select.value);

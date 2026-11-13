@@ -892,11 +892,13 @@ body:has(.filter-modal[open]) { overflow: hidden; }
 @media (max-width: 680px) { #featured .carousel__track { column-gap: 20px; } }
 
 /* Compact language control shared by the home page, catalog and dialogs. */
-.language-switch {display:flex;align-items:center;flex:0 0 auto;order:3}
-.language-switch select {appearance:none;width:60px;height:40px;padding:0 8px;border:1px solid currentColor;border-radius:0;background:transparent;color:inherit;font-family:inherit;font-size:12px;font-weight:500;cursor:pointer;text-overflow:clip}
+.language-switch {position:relative;display:flex;align-items:center;flex:0 0 auto;order:3}
+.language-switch select {appearance:none;width:62px;height:40px;padding:0 24px 0 10px;border:1px solid currentColor;border-radius:0;background:transparent;color:inherit;font-family:inherit;font-size:12px;font-weight:500;cursor:pointer;text-overflow:clip}
 .language-switch option {color:#1c1c19;background:#fff}
 .language-switch select:focus-visible {outline:2px solid currentColor;outline-offset:3px}
 html[lang="ko"] body {font-family:'Libre Franklin','Apple SD Gothic Neo','Malgun Gothic',sans-serif;word-break:keep-all;overflow-wrap:break-word}
 html[lang="ko"] .h2,html[lang="ko"] .display {line-height:1.16;letter-spacing:-.035em}
-@media(max-width:680px){.language-switch select{height:40px;width:58px;padding:0 6px}.header__nav--products{gap:8px}.header__logo img{max-width:128px}.header__nav--products>a:first-child{font-size:11px}}
+@media(max-width:680px){.language-switch select{height:40px;width:58px;padding:0 22px 0 8px}.header__nav--products{gap:8px}.header__logo img{max-width:128px}.header__nav--products>a:first-child{font-size:11px}}
 @media(max-width:390px){.header__logo img{max-width:105px}.header__nav--products{gap:6px}.header__nav--products>a:first-child{max-width:74px;line-height:1.3}}
+
+.language-switch__chevron {position:absolute;right:8px;top:50%;transform:translateY(-50%);width:14px;height:14px;pointer-events:none}
